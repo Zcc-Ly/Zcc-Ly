@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="st.dao.stustMapper">
+  <resultMap id="BaseResultMap" type="st.bean.stust">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="su_sId" jdbcType="INTEGER" property="suSid" />
+    <result column="su_stId" jdbcType="INTEGER" property="suStid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, su_sId, su_stId
+  </sql>
+  <select id="selectByExample" parameterType="st.bean.stustExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from stust
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stust
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectdBysId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stust
+    where su_sId = #{su_sId,jdbcType=INTEGER}
+  </select>
+  
+ <select id="selectdBystId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stust
+    where su_stId = #{su_stId,jdbcType=INTEGER}
+  </select>
+  
+  
+   <select id="selectdBystIdandsId" parameterType="st.bean.stust" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stust
+    where su_stId = #{suStid,jdbcType=INTEGER} and su_sId = #{suSid,jdbcType=INTEGER}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stust
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="st.bean.stustExample">
+    delete from stust
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="st.bean.stust">
+    insert into stust (id, su_sId, su_stId
+      )
+    values (#{id,jdbcType=INTEGER}, #{suSid,jdbcType=INTEGER}, #{suStid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="st.bean.stust">
+    insert into stust
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="suSid != null">
+        su_sId,
+      </if>
+      <if test="suStid != null">
+        su_stId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="suSid != null">
+        #{suSid,jdbcType=INTEGER},
+      </if>
+      <if test="suStid != null">
+        #{suStid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="st.bean.stustExample" resultType="java.lang.Long">
+    select count(*) from stust
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update stust
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.suSid != null">
+        su_sId = #{record.suSid,jdbcType=INTEGER},
+      </if>
+      <if test="record.suStid != null">
+        su_stId = #{record.suStid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update stust
+    set id = #{record.id,jdbcType=INTEGER},
+      su_sId = #{record.suSid,jdbcType=INTEGER},
+      su_stId = #{record.suStid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="st.bean.stust">
+    update stust
+    <set>
+      <if test="suSid != null">
+        su_sId = #{suSid,jdbcType=INTEGER},
+      </if>
+      <if test="suStid != null">
+        su_stId = #{suStid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="st.bean.stust">
+    update stust
+    set su_sId = #{suSid,jdbcType=INTEGER},
+      su_stId = #{suStid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
